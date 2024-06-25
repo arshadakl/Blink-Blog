@@ -6,6 +6,7 @@ CREATE TABLE Users (
   created_at DATETIME DEFAULT GETDATE()
 );
 
+
 CREATE TABLE BlogPosts (
   postID INT PRIMARY KEY IDENTITY,
   userID INT,
