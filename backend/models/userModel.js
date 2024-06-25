@@ -43,4 +43,21 @@ const findUserByUsername = async (username) => {
   }
 };
 
-export { createUser, findUserByEmail, findUserByUsername };
+const updateUserProfile = async (userID, profileURL) => {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request()
+      .input('userID', sql.Int, userID)
+      .input('profileURL', sql.NVarChar, profileURL)
+      .query(`UPDATE Users 
+              SET profileURL = @profileURL
+              WHERE userID = @userID
+              OUTPUT INSERTED.userID, INSERTED.username, INSERTED.email, INSERTED.profileURL`);
+    return result.recordset[0];
+  } catch (error) {
+    console.error('SQL error', error);
+    throw error;
+  }
+};
+
+export { createUser, findUserByEmail, findUserByUsername, updateUserProfile };

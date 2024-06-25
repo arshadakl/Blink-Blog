@@ -8,14 +8,15 @@ CREATE TABLE Users (
 
 
 CREATE TABLE BlogPosts (
-  postID INT PRIMARY KEY IDENTITY,
-  userID INT,
-  title NVARCHAR(255),
-  content TEXT,
+  postID INT PRIMARY KEY IDENTITY(1,1),
+  title NVARCHAR(255) NOT NULL,
+  content NVARCHAR(MAX) NOT NULL,
+  authorID INT NOT NULL,
   created_at DATETIME DEFAULT GETDATE(),
-  updated_at DATETIME,
-  FOREIGN KEY (userID) REFERENCES Users(userID)
+  imageUrl NVARCHAR(255) NULL
 );
+
+
 
 CREATE TABLE Comments (
   commentID INT PRIMARY KEY IDENTITY,

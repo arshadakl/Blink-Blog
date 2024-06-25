@@ -1,22 +1,22 @@
 import { getAllComments, createComment } from '../models/commentModel.js';
 
-const getAllCommentsController = async (req, res) => {
+const getAllCommentsController = async (req, res, next) => {
   const { postID } = req.params;
   try {
     const comments = await getAllComments(postID);
     res.json(comments);
   } catch (error) {
-    res.status(500).send('Error fetching comments');
+    next(error)
   }
 };
 
-const createCommentController = async (req, res) => {
+const createCommentController = async (req, res, next) => {
   const { postID, userID, content } = req.body;
   try {
     await createComment({ postID, userID, content });
-    res.status(201).send('Comment added successfully');
+    res.status(201).send({status:true,message:'Comment added successfully'});
   } catch (error) {
-    res.status(500).send('Error adding comment');
+    next(error)
   }
 };
 

@@ -6,7 +6,7 @@ import CustomError from '../utils/CustomError.js';
 
 const generateToken = (user) => {
   return jwt.sign(
-    { id: user._id, email: user.email },
+    { id: user.userID, email: user.email },
     process.env.JWT_SECRET,
     {
       expiresIn: "1d",
@@ -52,7 +52,7 @@ const login = async (req, res, next) => {
     }
     const user = await findUserByEmail(email);
     if (!user) {
-      throw new CustomError("Invalid username or password", 401);
+      throw new CustomError("User Not Found", 401);
     }
     const isPasswordValid = bcrypt.compareSync(password, user.password);
     if (!isPasswordValid) {
