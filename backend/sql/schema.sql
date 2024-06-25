@@ -1,0 +1,27 @@
+CREATE TABLE Users (
+  userID INT PRIMARY KEY IDENTITY,
+  username NVARCHAR(50) NOT NULL,
+  email NVARCHAR(100) NOT NULL UNIQUE,
+  password NVARCHAR(255) NOT NULL,
+  created_at DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE BlogPosts (
+  postID INT PRIMARY KEY IDENTITY,
+  userID INT,
+  title NVARCHAR(255),
+  content TEXT,
+  created_at DATETIME DEFAULT GETDATE(),
+  updated_at DATETIME,
+  FOREIGN KEY (userID) REFERENCES Users(userID)
+);
+
+CREATE TABLE Comments (
+  commentID INT PRIMARY KEY IDENTITY,
+  postID INT,
+  userID INT,
+  content TEXT,
+  created_at DATETIME DEFAULT GETDATE(),
+  FOREIGN KEY (postID) REFERENCES BlogPosts(postID),
+  FOREIGN KEY (userID) REFERENCES Users(userID)
+);
