@@ -23,3 +23,12 @@ export const _login = async (data) => {
         throw error;
     }
 }
+
+export const _logout = async () => {
+    try {
+        const response = await AUTH_API.post('/logout')
+        return response.data
+    } catch (error) {
+        throw error;
+    }
+}

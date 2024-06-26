@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { handleError } from '../utils/API/errorHandler';
 import { _signupAPI } from '../utils/API/AuthApi';
+import LogoButton from '../components/LogoButton';
 
 
 function Signup() {
@@ -33,6 +34,7 @@ function Signup() {
 
   return (
     <section>
+        <LogoButton/>
       <div className="grid md:h-screen md:grid-cols-2">
         <div className="flex flex-col items-center justify-center bg-white">
           <div className="max-w-lg px-5 py-16 text-center md:px-10 md:py-24 lg:py-32">

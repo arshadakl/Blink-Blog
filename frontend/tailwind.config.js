@@ -7,16 +7,22 @@ const {
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./node_modules/flowbite/**/*.js"],
   darkMode: "media",
   theme: {
     extend: {
       fontFamily: {
         blink: ["Kalnia", "serif"],
       },
+      colors:{
+        "B1":"#171719",
+        "B2":"#212124",
+        
+      },
     },
   },
   plugins: [
+    require('flowbite/plugin'),
     addVariablesForColors,
     function ({ matchUtilities, theme }) {
       matchUtilities(
@@ -41,6 +47,7 @@ module.exports = {
       );
     },
   ],
+  
 };
 
 function addVariablesForColors({ addBase, theme }) {

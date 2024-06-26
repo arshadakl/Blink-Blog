@@ -1,7 +1,8 @@
 import { getAllPosts, createPost, editPost, getPostByID } from "../models/blogModel.js";
 import { updateUserProfile } from "../models/userModel.js";
+import { uploadToCloudinary } from "../utils/Cloudinary.js";
 import CustomError from "../utils/CustomError.js";
-
+import fs from 'fs'
 const getAllPostsController = async (req, res, next) => {
   try {
     const posts = await getAllPosts();
@@ -13,13 +14,23 @@ const getAllPostsController = async (req, res, next) => {
 
 const createPostController = async (req, res, next) => {
   try {
-    const { title, content, authorID, imageUrl } = req.body;
-    if (!(title && content && authorID)) {
+    const { title, content, authorID } = req.body;
+    if (!(title && content)) {
       throw new CustomError("Please fill all the fields", 422);
     }
-
-    const newPost = await createPost({title, content, authorID, imageUrl });
-    res.status(201).json({status:true , message: "Post created successfully", post: newPost });
+    const PostData = {
+      title, content,authorID:6
+    }
+    if(req.file){
+      const imageUrl = req.file.path;
+      const CloudImgResponse = await uploadToCloudinary(imageUrl,"Blink")
+      console.log(CloudImgResponse);
+      PostData.imageUrl = CloudImgResponse.secure_url
+      fs.unlinkSync(imageUrl)
+    }
+    const newPost = await createPost(PostData);
+    console.log(newPost);
+    res.status(201).json({status:true , message: "new Post created successfully", post: newPost });
   } catch (error) {
     next(error)
   }

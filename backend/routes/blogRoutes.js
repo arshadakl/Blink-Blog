@@ -1,10 +1,12 @@
 import express from 'express';
 import { getAllPostsController, createPostController, editPostController, deletePostController, getPostByIDController } from '../controllers/blogController.js';
+import { uploadMiddleware } from '../middlewares/fileupload.js';
+
 
 const router = express.Router();
 
 router.get('/posts', getAllPostsController);
-router.post('/posts', createPostController);
+router.post('/posts',uploadMiddleware, createPostController);
 router.put('/posts', editPostController);
 router.delete('/posts/:postID', deletePostController);
 router.get('/posts/:postID', getPostByIDController);

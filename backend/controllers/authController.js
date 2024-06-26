@@ -67,4 +67,13 @@ const login = async (req, res, next) => {
 };
 
 
-export { register, login };
+const logout = async (req,res,next)=>{
+  try {
+    res.status(200).json({status:true,message:"Logout Success"})
+  } catch (error) {
+    next(error)
+  }
+}
+
+
+export { register, login, logout };
