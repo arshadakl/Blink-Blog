@@ -4,17 +4,22 @@ const getAllCommentsController = async (req, res, next) => {
   const { postID } = req.params;
   try {
     const comments = await getAllComments(postID);
-    res.json(comments);
+    console.log(comments);
+    res.status(200).json({status:true,comments});
   } catch (error) {
     next(error)
   }
 };
 
 const createCommentController = async (req, res, next) => {
-  const { postID, userID, content } = req.body;
+  const { postID } = req.params;
+  const { content } = req.body;
+  const userID = req.user.userID
   try {
-    await createComment({ postID, userID, content });
-    res.status(201).send({status:true,message:'Comment added successfully'});
+    console.log("content :" + content);
+    const result = await createComment({ postID, userID, content });
+    const allcomments = await getAllComments(postID)
+    res.status(201).send({status:true, message:'Comment added successfully',comments:allcomments});
   } catch (error) {
     next(error)
   }

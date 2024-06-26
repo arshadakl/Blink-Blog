@@ -1,14 +1,41 @@
 import { sql, poolPromise } from '../config/database.js';
 
+// const getAllComments = async (postID) => {
+//   try {
+//     const pool = await poolPromise;
+//     const result = await pool.request()
+//       .input('postID', sql.Int, postID)
+//       .query('SELECT * FROM Comments WHERE postID = @postID');
+//     return result.recordset;
+//   } catch (error) {
+//     console.error('SQL error', error);
+//   }
+// };
+
 const getAllComments = async (postID) => {
   try {
     const pool = await poolPromise;
     const result = await pool.request()
       .input('postID', sql.Int, postID)
-      .query('SELECT * FROM Comments WHERE postID = @postID');
+      .query(`
+        SELECT 
+          Comments.content, 
+          Comments.created_at, 
+          Users.username, 
+          Users.profileURL
+        FROM 
+          Comments 
+        INNER JOIN 
+          Users 
+        ON 
+          Comments.userID = Users.userID
+        WHERE 
+          Comments.postID = @postID
+      `);
     return result.recordset;
   } catch (error) {
     console.error('SQL error', error);
+    throw error;
   }
 };
 

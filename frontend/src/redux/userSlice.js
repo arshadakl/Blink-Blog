@@ -7,6 +7,7 @@ const initialState = {
     username: null,
     email: '',
     profileURL: '',
+    token:""
   },
 };
 
@@ -22,7 +23,8 @@ const userSlice = createSlice({
         username: null,
         email: '',
         profileURL: '',
-        userID:''
+        userID:'',
+        token:""
       };
     },
   },

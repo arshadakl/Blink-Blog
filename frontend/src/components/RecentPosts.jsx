@@ -3,8 +3,11 @@ import { _getPost } from '../utils/API/BlogApi'
 import { handleError } from '../utils/API/errorHandler'
 import { toast } from 'sonner'
 import { ShortString } from '../utils/ShortString'
+import { DateFormater } from '../utils/DateFormater'
+import { useNavigate } from 'react-router-dom'
 
 function RecentPosts() {
+    const navigate = useNavigate()
     const [posts,setPosts] = useState()
     const fetchData = async()=>{
         try {
@@ -39,7 +42,7 @@ function RecentPosts() {
                         {/* Article */}
                         {
                             posts?.map((post)=>
-                                <article className="flex flex-col items-center gap-4 md:flex-row lg:gap-6">
+                                <article onClick={()=>navigate(`/post/${post.postID}`)} className="flex flex-col items-center gap-4 md:flex-row lg:gap-6">
                             {post?.imageUrl &&  <p
                                 className="group relative block h-56 w-full shrink-0 self-start overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-24 md:w-24 lg:h-40 lg:w-40"
                             >
@@ -51,7 +54,7 @@ function RecentPosts() {
                                 />
                             </p>}
                             <div className="flex flex-col gap-2">
-                                <span className="text-sm text-gray-400">April 2, 2022</span>
+                                <span className="text-sm text-gray-400">{DateFormater(post.created_at) }</span>
                                 <h2 className="text-xl font-bold text-slate-50">
                                     <p
                                         className="transition duration-100 hover:text-rose-500 active:text-rose-600"

@@ -28,26 +28,45 @@ const createPost = async ({ title, content, authorID, imageUrl }) => {
   }
 };
 
-
 const editPost = async ({ postID, title, content, imageUrl }) => {
   try {
+    console.log('editPost function called with:', { postID, title, content, imageUrl });
+
     const pool = await poolPromise;
-    const result = await pool.request()
+    
+    // First, update the post
+    await pool.request()
       .input('postID', sql.Int, postID)
       .input('title', sql.NVarChar, title)
       .input('content', sql.NVarChar, content)
       .input('imageUrl', sql.NVarChar, imageUrl || null)
-      .query(`UPDATE Posts 
-              SET title = @title, content = @content, imageUrl = @imageUrl
-              WHERE postID = @postID
-              OUTPUT INSERTED.postID, INSERTED.title, INSERTED.content, INSERTED.authorID, INSERTED.created_at, INSERTED.imageUrl`);
+      .query(`
+        UPDATE Posts
+        SET title = @title, content = @content, imageUrl = @imageUrl
+        WHERE postID = @postID
+      `);
+
+    // Then, fetch the updated post
+    const result = await pool.request()
+      .input('postID', sql.Int, postID)
+      .query(`
+        SELECT postID, title, content, authorID, created_at, imageUrl
+        FROM Posts
+        WHERE postID = @postID
+      `);
+
+    console.log('SQL query result:', result);
+
+    if (result.recordset.length === 0) {
+      throw new Error('No rows were updated');
+    }
+
     return result.recordset[0];
   } catch (error) {
-    console.error('SQL error', error);
+    console.error('SQL error in editPost:', error);
     throw error;
   }
 };
-
 
 const deletePost = async (postID) => {
   try {

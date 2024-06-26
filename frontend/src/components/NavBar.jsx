@@ -23,7 +23,7 @@ function NavBar() {
         <>
             <nav className=" border-gray-200 bg-B1">
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                    <p className='text-white font-blink text-3xl cursor-pointer' onClick={()=>navigate('/')}>Blink</p>
+                    <p className='text-white font-semibold font-blink text-3xl cursor-pointer' onClick={()=>navigate('/')}>Blink</p>
                     <button
                         data-collapse-toggle="navbar-default"
                         type="button"

@@ -35,8 +35,8 @@ const register = async (req, res,next) => {
     const encryptedPassword = await bcrypt.hash(password, 10);
     const newUser = await createUser({ username, email, password: encryptedPassword });
     const token = generateToken(newUser)
-    // newUser.password = undefined;
-    res.status(201).json({status:true, message: 'User registered successfully', user: newUser,token });
+    newUser.token = token;
+    res.status(201).json({status:true, message: 'User registered successfully', user: newUser });
   } catch (error) {
     next(error)
   }
@@ -60,7 +60,8 @@ const login = async (req, res, next) => {
     }
     const token = generateToken(user);
     user.password = undefined;
-    res.status(200).json({ status: true, message: "Login successful", user, token });
+    user.token = token;
+    res.status(200).json({ status: true, message: "Login successful", user });
   } catch (error) {
     next(error);
   }

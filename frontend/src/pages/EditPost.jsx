@@ -1,20 +1,17 @@
 import React from 'react'
 import NavBar from '../components/NavBar'
-import RecentPosts from '../components/RecentPosts'
 import { GridBackground } from '../components/GridBackground'
-import HeroSection from '../components/HeroSection'
+import EditPostForm from '../components/EditPostForm'
 
-
-function Home() {
+function EditPost() {
     return (
         <>
             <NavBar />
             <GridBackground>
-                <HeroSection />
-                <RecentPosts />
+                <EditPostForm />
             </GridBackground>
         </>
     )
 }
 
-export default Home
+export default EditPost

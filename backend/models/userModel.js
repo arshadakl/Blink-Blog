@@ -43,6 +43,19 @@ const findUserByUsername = async (username) => {
   }
 };
 
+const findUserByID = async (userID) => {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request()
+      .input('userID', sql.Int, userID)
+      .query('SELECT * FROM Users WHERE userID = @userID');
+    return result.recordset[0];
+  } catch (error) {
+    console.error('SQL error', error);
+    throw error;
+  }
+};
+
 const updateUserProfile = async (userID, profileURL) => {
   try {
     const pool = await poolPromise;
@@ -60,4 +73,4 @@ const updateUserProfile = async (userID, profileURL) => {
   }
 };
 
-export { createUser, findUserByEmail, findUserByUsername, updateUserProfile };
+export { createUser, findUserByEmail, findUserByUsername, updateUserProfile, findUserByID };
