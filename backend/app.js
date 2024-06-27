@@ -15,7 +15,7 @@ const port = process.env.PORT || 3000;
 configCloudinary()
 // i want to add cors
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'http://blink-akl.vercel.app',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 }));
