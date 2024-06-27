@@ -5,15 +5,18 @@ import { toast } from 'sonner'
 import { ShortString } from '../utils/ShortString'
 import { DateFormater } from '../utils/DateFormater'
 import { useNavigate } from 'react-router-dom'
+import Recent from './skeleton/Recent'
 
 function RecentPosts() {
     const navigate = useNavigate()
+    const [loading,setLoading] = useState(true)
     const [posts,setPosts] = useState()
     const fetchData = async()=>{
         try {
             const response = await _getPost()
             if(response.status){
                 setPosts(response.posts)
+                setLoading(false)
             }
         } catch (error) {
             const errorMessage = handleError(error);
@@ -40,7 +43,12 @@ function RecentPosts() {
                     {/* /Heading */}
                     <div className="grid gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-2 xl:grid-cols-2 xl:gap-16">
                         {/* Article */}
-                        {
+                        {loading ? 
+                        <>
+                        <Recent/>
+                        <Recent/>
+                        </>
+                        :
                             posts?.map((post)=>
                                 <article onClick={()=>navigate(`/post/${post.postID}`)} className="flex flex-col items-center gap-4 md:flex-row lg:gap-6">
                             {post?.imageUrl &&  <p

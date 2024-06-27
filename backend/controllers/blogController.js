@@ -4,6 +4,9 @@ import {
   editPost,
   getPostByID,
   getPostByUserID,
+  getPaginatedPosts,
+  getTotalPostsCount,
+  deletePost,
 } from "../models/blogModel.js";
 import { findUserByID, updateUserProfile } from "../models/userModel.js";
 import { uploadToCloudinary } from "../utils/Cloudinary.js";
@@ -50,52 +53,6 @@ const createPostController = async (req, res, next) => {
     next(error);
   }
 };
-
-// const editPostController = async (req, res, next) => {
-//   try {
-//     const { title, content } = req.body;
-//     const { postId } = req.params; // Assuming the postId is passed as a route parameter
-//     const userID = req.user.userID;
-
-//     if (!(title && content)) {
-//       throw new CustomError("Please fill all the fields", 422);
-//     }
-
-//     // First, check if the post exists and belongs to the user
-//     const existingPost = await getPostByID(postId);
-//     if (!existingPost) {
-//       throw new CustomError("Post not found", 404);
-//     }
-//     if (existingPost.authorID !== userID) {
-//       throw new CustomError("You are not authorized to edit this post", 403);
-//     }
-
-//     let imageUrl = existingPost.imageUrl; // Keep the existing image URL by default
-
-//     // Handle image upload if a new image is provided
-//     if (req.file) {
-//       const newImageUrl = req.file.path;
-//       const CloudImgResponse = await uploadToCloudinary(newImageUrl, "Blink");
-//       imageUrl = CloudImgResponse.secure_url;
-//       fs.unlinkSync(newImageUrl);
-
-//       // Delete the old image from Cloudinary if it exists
-//       if (existingPost.imageUrl) {
-//         await deleteFromCloudinary(existingPost.imageUrl);
-//       }
-//     }
-
-//     const updatedPost = await editPost({ postID: postId, title, content, imageUrl });
-//     console.log(updatedPost);
-//     res.status(200).json({
-//       status: true,
-//       message: "Post updated successfully",
-//       post: updatedPost,
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
 
 
 const editPostController = async (req, res, next) => {
@@ -148,20 +105,27 @@ const editPostController = async (req, res, next) => {
   }
 };
 
+
 const deletePostController = async (req, res, next) => {
   try {
     const { postID } = req.params;
+    const userID = req.user.userID;
     if (!postID) {
       throw new CustomError("Post ID is required", 422);
     }
 
-    const isDeleted = await deletePost(postID);
-    if (isDeleted) {
-      res
-        .status(200)
-        .json({ status: true, message: "Post deleted successfully" });
-    } else {
-      throw new CustomError("Post not found", 404);
+  
+    try {
+      const isDeleted = await deletePost(postID);
+      if (isDeleted) {
+        const posts = await getPostByUserID(userID);
+        res.status(200).json({ status: true, message: "Post deleted successfully", posts });
+      } else {
+        throw new CustomError("Post not found", 404);
+      }
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      throw new CustomError("Failed to delete post", 500);
     }
   } catch (error) {
     next(error);
@@ -232,6 +196,28 @@ const getUserAllPosts = async (req, res, next) => {
   }
 };
 
+const getPaginatedPostsController = async (req, res,next) => {
+  try {
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = 6; 
+    const offset = (page - 1) * limit;
+
+    const posts = await getPaginatedPosts(offset, limit);
+    const totalPosts = await getTotalPostsCount();
+    const totalPages = Math.ceil(totalPosts / limit);
+
+    res.status(200).json({
+      status:true,
+      currentPage: page,
+      totalPages: totalPages,
+      posts: posts,
+    });
+  } catch (error) {
+    next(error)
+  }
+};
+
+
 export {
   getAllPostsController,
   createPostController,
@@ -240,5 +226,6 @@ export {
   getPostByIDController,
   updateUserProfileController,
   getUserByIDController,
-  getUserAllPosts
+  getUserAllPosts,
+  getPaginatedPostsController
 };

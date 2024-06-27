@@ -5,12 +5,14 @@ import { handleError } from '../utils/API/errorHandler'
 import { toast } from 'sonner'
 import { DateFormater } from '../utils/DateFormater'
 import CommentSection from './CommentSection'
+import Single from './skeleton/Single'
 
 function SingleContent() {
     const navigate = useNavigate()
     const { id } = useParams()
     const [post, setPost] = useState()
     const [author, setAuthor] = useState()
+    const [loading,setLoading] = useState(true)
     const fetchData = async () => {
         try {
             if (!id) {
@@ -20,6 +22,7 @@ function SingleContent() {
             if (response.status) {
                 setPost(response?.post)
                 setAuthor(response?.user)
+                setLoading(false)
             }
         } catch (error) {
             const errorMessage = handleError(error);
@@ -36,7 +39,15 @@ function SingleContent() {
         <div className="mx-auto max-w-screen-lg">
             {/* header */}
             {/* header ends here */}
+            
             <main className="mt-10">
+
+                {
+                    loading ? 
+                    <Single/>:
+                    <>
+                
+                
                 <div className="relative mx-auto mb-4 w-full md:mb-0 px-2">
                     <div className="px-4 lg:px-0">
                         <h2 className="text-4xl font-semibold  font-blink leading-tight text-slate-50">
@@ -44,7 +55,8 @@ function SingleContent() {
                         </h2>
                         <p className="text-md font-normal my-2 text-gray-100/70 font-mono">{post && DateFormater(post?.created_at)}</p>
                     </div>
-                    {post?.imageUrl && <img
+                    {
+                    post?.imageUrl && <img
                         src={post?.imageUrl}
                         className="w-full object-cover  lg:rounded"
                         style={{ height: "28em" }}
@@ -86,6 +98,7 @@ function SingleContent() {
                     <CommentSection />
 
                 </div>
+                </>}
             </main>
         </div>
 

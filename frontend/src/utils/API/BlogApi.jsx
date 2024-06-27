@@ -34,6 +34,15 @@ export const _createPost = async (data) => {
     }
 }
 
+export const _deletePost = async (postID) => {
+    try {
+        const response = await BLOG_API.delete(`/posts/${postID}`)
+        return response.data
+    } catch (error) {
+        throw error;
+    }
+}
+
 export const _editPost = async (postId,data) => {
     try {
         const response = await BLOG_API.put(`/posts/${postId}`, data, {
@@ -51,6 +60,15 @@ export const _editPost = async (postId,data) => {
 export const _getPost = async () => {
     try {
         const response = await BLOG_API.get('/posts')
+        return response.data
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const _getAllPost = async (pageNumber) => {
+    try {
+        const response = await BLOG_API.get(`/allposts?page=${pageNumber}`)
         return response.data
     } catch (error) {
         throw error;

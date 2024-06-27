@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'sonner';
@@ -6,10 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import { handleError } from '../utils/API/errorHandler';
 import { _signupAPI } from '../utils/API/AuthApi';
 import LogoButton from '../components/LogoButton';
+import { FaRegUser } from 'react-icons/fa';
 
 
 function Signup() {
   const navigate = useNavigate();
+  
 
   const validationSchema = Yup.object({
     username: Yup.string().required('Username is required'),
@@ -49,9 +51,7 @@ function Signup() {
               {({ isSubmitting }) => (
                 <Form className="mx-auto mb-4 max-w-sm pb-4">
                   <div className="relative mb-4">
-                    <img
-                      alt=""
-                      src="https://assets.website-files.com/6357722e2a5f19121d37f84d/6357722e2a5f190b7e37f878_EnvelopeSimple.svg"
+                    <FaRegUser size={20}
                       className="absolute bottom-0 left-[5%] right-auto top-[26%] inline-block"
                     />
                     <Field

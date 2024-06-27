@@ -9,12 +9,14 @@ import EditPost from '../pages/EditPost'
 import ProfilePage from '../pages/ProfilePage'
 import LoginAuth from '../Auth/LoginAuth'
 import LogoutAth from '../Auth/LogoutAth'
+import AllPost from '../pages/AllPost'
 
 function UserRouter() {
   return (
     <Routes>
       <Route path='/' element={<Home />} />
       <Route path='/post/:id' element={<SinglePost />} />
+      <Route path='/allpost' element={<AllPost />} />
 
       {/* auth routes */}
       <Route element={<LoginAuth />}>

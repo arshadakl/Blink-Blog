@@ -1,19 +1,17 @@
 import React from 'react'
 import NavBar from '../components/NavBar'
 import { GridBackground } from '../components/GridBackground'
-import SingleContent from '../components/SingleContent'
-import CommentSection from '../components/CommentSection'
+import AllpostSection from '../components/AllpostSection'
 
-function SinglePost() {
+function AllPost() {
   return (
-
     <>
       <NavBar />
       <GridBackground>
-        <SingleContent />
+        <AllpostSection />
       </GridBackground>
     </>
   )
 }
 
-export default SinglePost
+export default AllPost

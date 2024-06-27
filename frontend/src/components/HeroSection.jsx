@@ -9,7 +9,7 @@ function HeroSection() {
     return (
         <section className="bg-[#36343B]/50 rounded-xl font-blink mt-5">
             <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
-                <a
+                <p onClick={()=>navigate('/allpost')}
                     className="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm   rounded-full bg-B1 text-white hover:bg-gray-200 dark:hover:bg-B1/80"
                     role="alert"
                 >
@@ -28,7 +28,7 @@ function HeroSection() {
                             clipRule="evenodd"
                         />
                     </svg>
-                </a>
+                </p>
                 <h1 className="mb-4 font-blink text-4xl font-extrabold tracking-tight leading-none  md:text-5xl lg:text-6xl text-white">
                 Blink: Be seen, be heard.
                 </h1>

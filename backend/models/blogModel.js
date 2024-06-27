@@ -1,5 +1,4 @@
 import { sql, poolPromise } from '../config/database.js';
-
 const getAllPosts = async () => {
   try {
     const pool = await poolPromise;
@@ -71,15 +70,34 @@ const editPost = async ({ postID, title, content, imageUrl }) => {
 const deletePost = async (postID) => {
   try {
     const pool = await poolPromise;
-    await pool.request()
-      .input('postID', sql.Int, postID)
-      .query('DELETE FROM Posts WHERE postID = @postID');
-    return true;
+    const transaction = await new sql.Transaction(pool);
+
+    try {
+      await transaction.begin();
+
+      // First, delete comments related to the post
+      await transaction.request()
+        .input('postID', sql.Int, postID)
+        .query('DELETE FROM Comments WHERE postID = @postID');
+
+      // Then, delete the post itself
+      await transaction.request()
+        .input('postID', sql.Int, postID)
+        .query('DELETE FROM Posts WHERE postID = @postID');
+
+      await transaction.commit();
+      return true;
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
+    }
   } catch (error) {
     console.error('SQL error', error);
     throw error;
   }
 };
+
+
 
 const getPostByID = async (postID) => {
   try {
@@ -115,4 +133,30 @@ const getPostByUserID = async (authorID) => {
 };
 
 
-export { getAllPosts, createPost, editPost, deletePost, getPostByID, getPostByUserID };
+const getPaginatedPosts = async (offset, limit) => {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request()
+      .input('offset', sql.Int, offset)
+      .input('limit', sql.Int, limit)
+      .query(`SELECT * FROM Posts
+              ORDER BY created_At DESC
+              OFFSET @offset ROWS
+              FETCH NEXT @limit ROWS ONLY`);
+    return result.recordset;
+  } catch (error) {
+    console.error('SQL error', error);
+  }
+};
+
+const getTotalPostsCount = async () => {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request().query('SELECT COUNT(*) AS count FROM Posts');
+    return result.recordset[0].count;
+  } catch (error) {
+    console.error('SQL error', error);
+  }
+};
+
+export { getAllPosts, createPost, editPost, deletePost, getPostByID, getPostByUserID,getTotalPostsCount ,getPaginatedPosts};
