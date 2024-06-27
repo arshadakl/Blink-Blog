@@ -49,7 +49,7 @@ function RecentPosts() {
                         <Recent/>
                         </>
                         :
-                            posts?.map((post)=>
+                            posts.slice(0,6)?.map((post)=>
                                 <article onClick={()=>navigate(`/post/${post.postID}`)} className="flex flex-col items-center gap-4 md:flex-row lg:gap-6">
                             {post?.imageUrl &&  <p
                                 className="group relative block h-56 w-full shrink-0 self-start overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-24 md:w-24 lg:h-40 lg:w-40"
@@ -90,6 +90,17 @@ function RecentPosts() {
                     </div>
                 </div>
             </section>
+
+            <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+                    
+                   <p onClick={()=>navigate('/allpost')}
+                        className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border-2 border-B2 hover:bg-B1 focus:ring-4  focus:ring-gray-100 dark:text-white cursor-pointer  dark:focus:ring-gray-800"
+                    >
+                        
+                        Read More Posts
+                    </p>
+                   
+                </div>
 
         </div>
     )

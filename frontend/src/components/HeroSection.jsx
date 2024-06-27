@@ -7,13 +7,13 @@ function HeroSection() {
     const user = useSelector((state)=>state.user.user)
     console.log(user);
     return (
-        <section className="bg-[#36343B]/50 rounded-xl font-blink mt-5">
+        <section className=" bg-gradient-to-t from-B1/35 to-B1 rounded-xl font-blink mt-5">
             <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
                 <p onClick={()=>navigate('/allpost')}
                     className="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm   rounded-full bg-B1 text-white hover:bg-gray-200 dark:hover:bg-B1/80"
                     role="alert"
                 >
-                    <span className="text-xs bg-primary-600 rounded-full text-white px-4 py-1.5 mr-1">
+                    <span className="text-xs cursor-pointer bg-primary-600 rounded-full text-white px-4 py-1.5 mr-1">
                     Explore all blogs
                     </span>
                     <svg

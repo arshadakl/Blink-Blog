@@ -2,7 +2,7 @@ import { sql, poolPromise } from '../config/database.js';
 const getAllPosts = async () => {
   try {
     const pool = await poolPromise;
-    const result = await pool.request().query('SELECT * FROM Posts');
+    const result = await pool.request().query('SELECT * FROM Posts ORDER BY created_At DESC');
     return result.recordset;
   } catch (error) {
     console.error('SQL error', error);

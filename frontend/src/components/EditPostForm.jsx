@@ -6,6 +6,7 @@ import { handleError } from '../utils/API/errorHandler';
 import { toast } from 'sonner';
 import { useNavigate, useParams } from 'react-router-dom';
 import { _editPost, _getSinglePost } from '../utils/API/BlogApi';
+import Loading from './Loading';
 
 function EditPostForm() {
     const navigate = useNavigate()
@@ -13,7 +14,7 @@ function EditPostForm() {
     const [initialValues, setInitialValues] = useState({ title: '', content: '' });
     const fileInputRef = useRef(null);
     const { postId } = useParams(); // Assuming you're using react-router and have a route parameter for postId
-
+    const [isLoading,setIsLoading] = useState(false)
     useEffect(() => {
         // Fetch the post data when the component mounts
         fetchPostData();
@@ -86,8 +87,9 @@ function EditPostForm() {
                 const imageFile = await fetch(image).then(res => res.blob());
                 formData.append('image', imageFile, 'blog_image.jpg');
             }
-
+            setIsLoading(true)
             const response = await _editPost(postId, formData);
+            setIsLoading(false)
             if (response.status) {
                 toast.success(response.message);
                 navigate('/profile')
@@ -101,6 +103,7 @@ function EditPostForm() {
 
     return (
         <div className="flex justify-center items-start font-blink py-10 bg-gradient-to-t  min-h-screen max-h-full w-full">
+            {isLoading && <Loading/>}
             <div className='md:w-5/6 w-11/12 bg-B1/80 min-h-96 max-h-full rounded-md'>
                 <div className='mx-10 my-4'>
                     <p className='font-blink font-medium text-white text-2xl'>Edit Blog Post</p>

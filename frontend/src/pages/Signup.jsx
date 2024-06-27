@@ -9,11 +9,13 @@ import LogoButton from '../components/LogoButton';
 import { FaRegUser } from 'react-icons/fa';
 import { setUser } from '../redux/userSlice';
 import { useDispatch } from 'react-redux';
+import Loading from '../components/Loading';
 
 
 function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch()
+  const [isLoading,setIsLoading] = useState(false)
 
   const validationSchema = Yup.object({
     username: Yup.string().required('Username is required'),
@@ -26,7 +28,9 @@ function Signup() {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
+      setIsLoading(true)
       const response = await _signupAPI(values);
+      setIsLoading(false)
       if (response.status) {
         dispatch(setUser(response.user));
       toast.success(response.message)
@@ -41,6 +45,7 @@ function Signup() {
   return (
     <section>
         <LogoButton/>
+        {isLoading && <Loading/>}
       <div className="grid md:h-screen md:grid-cols-2">
         <div className="flex flex-col items-center justify-center bg-white">
           <div className="max-w-lg px-5 py-16 text-center md:px-10 md:py-24 lg:py-32">

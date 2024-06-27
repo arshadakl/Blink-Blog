@@ -5,11 +5,13 @@ import { _createPost } from '../utils/API/BlogApi';
 import { handleError } from '../utils/API/errorHandler';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
+import Loading from './Loading';
 
 function CreatePostForm() {
     const [image, setImage] = useState(null);
     const fileInputRef = useRef(null);
     const navigate = useNavigate()
+    const [isLoading,setIsLoading] = useState(false)
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -62,8 +64,9 @@ function CreatePostForm() {
                 const imageFile = await fetch(image).then(res => res.blob());
                 formData.append('image', imageFile, 'blog_image.jpg');
             }
-            console.log(values);
+            setIsLoading(true)
             const response = await _createPost(formData)
+            setIsLoading(false)
             if (response.status) {
                 toast.success(response.message)
                 navigate('/');
@@ -77,8 +80,10 @@ function CreatePostForm() {
 
     return (
         <div className="flex justify-center items-start font-blink py-10 bg-gradient-to-t  min-h-screen max-h-full w-full">
+            {isLoading && <Loading/>}
             <div className='md:w-5/6 w-11/12 bg-B1/80 min-h-96 max-h-full rounded-md'>
                 <div className='mx-10 my-4'>
+                    
                     <p className='font-blink font-medium text-white text-2xl'>Create New Blog</p>
                 </div>
                 <Formik

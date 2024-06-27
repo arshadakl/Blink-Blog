@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -8,10 +8,12 @@ import { handleError } from '../utils/API/errorHandler';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/userSlice';
 import LogoButton from '../components/LogoButton';
+import Loading from '../components/Loading';
 
 function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch()
+    const [isLoading,setIsLoading] = useState(false)
 
     // Validation schema using Yup
     const validationSchema = Yup.object({
@@ -22,7 +24,9 @@ function Login() {
     // Form submission handler
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
+            setIsLoading(true)
             const response = await _login(values)
+            setIsLoading(false)
             if (response.status) {
                 console.log(response.user);
                 dispatch(setUser(response.user));
@@ -38,6 +42,7 @@ function Login() {
     return (
         <section>
             <LogoButton />
+            {isLoading && <Loading/>}
             <div className="grid md:h-screen  md:grid-cols-2">
                 <div className="flex flex-col items-center justify-center bg-white">
                     <div className="max-w-lg px-5 py-16 text-center md:px-10 md:py-24 lg:py-32">
