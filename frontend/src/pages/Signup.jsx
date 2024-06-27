@@ -7,11 +7,13 @@ import { handleError } from '../utils/API/errorHandler';
 import { _signupAPI } from '../utils/API/AuthApi';
 import LogoButton from '../components/LogoButton';
 import { FaRegUser } from 'react-icons/fa';
+import { setUser } from '../redux/userSlice';
+import { useDispatch } from 'react-redux';
 
 
 function Signup() {
   const navigate = useNavigate();
-  
+  const dispatch = useDispatch()
 
   const validationSchema = Yup.object({
     username: Yup.string().required('Username is required'),
@@ -26,6 +28,8 @@ function Signup() {
     try {
       const response = await _signupAPI(values);
       if (response.status) {
+        dispatch(setUser(response.user));
+      toast.success(response.message)
         navigate('/');
       }
     } catch (error) {
