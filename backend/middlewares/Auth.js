@@ -33,6 +33,7 @@ export const Auth = async (req, res, next) => {
       }
   
       req.user = isUser;
+      req.token = token
       return next();
     } catch (error) {
       next(error);

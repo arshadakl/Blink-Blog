@@ -59,13 +59,21 @@ const findUserByID = async (userID) => {
 const updateUserProfile = async (userID, profileURL) => {
   try {
     const pool = await poolPromise;
-    const result = await pool.request()
+    // First, update the user profile URL
+    await pool.request()
       .input('userID', sql.Int, userID)
       .input('profileURL', sql.NVarChar, profileURL)
       .query(`UPDATE Users 
               SET profileURL = @profileURL
-              WHERE userID = @userID
-              OUTPUT INSERTED.userID, INSERTED.username, INSERTED.email, INSERTED.profileURL`);
+              WHERE userID = @userID`);
+
+    // Then, fetch the updated user details
+    const result = await pool.request()
+      .input('userID', sql.Int, userID)
+      .query(`SELECT userID, username, email, profileURL 
+              FROM Users 
+              WHERE userID = @userID`);
+
     return result.recordset[0];
   } catch (error) {
     console.error('SQL error', error);

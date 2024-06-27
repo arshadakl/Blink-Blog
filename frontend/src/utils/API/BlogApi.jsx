@@ -74,3 +74,25 @@ export const _getSingleUser = async (id) => {
         throw error;
     }
 }
+
+export const _getUserPost = async () => {
+    try {
+        const response = await BLOG_API.get(`/getuserpost`)
+        return response.data
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const _updateProfile = async (formData) => {
+    try {
+        const response = await BLOG_API.put('/users/profile',formData,{
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+        return response.data
+    } catch (error) {
+        throw error;
+    }
+}

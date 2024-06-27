@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllPostsController, createPostController, editPostController, deletePostController, getPostByIDController, getUserByIDController } from '../controllers/blogController.js';
+import { getAllPostsController, createPostController, editPostController, deletePostController, getPostByIDController, getUserByIDController, getUserAllPosts, updateUserProfileController } from '../controllers/blogController.js';
 import { uploadMiddleware } from '../middlewares/fileupload.js';
 import { Auth } from '../middlewares/Auth.js';
 
@@ -12,5 +12,6 @@ router.put('/posts/:postId', Auth, uploadMiddleware, editPostController);
 router.delete('/posts/:postID',Auth, deletePostController);
 router.get('/posts/:postID', getPostByIDController);
 router.get('/getuser/:userID', getUserByIDController)
-
+router.get('/getuserpost',Auth, getUserAllPosts)
+router.put('/users/profile',Auth,uploadMiddleware, updateUserProfileController);
 export default router;

@@ -95,4 +95,24 @@ const getPostByID = async (postID) => {
 };
 
 
-export { getAllPosts, createPost, editPost, deletePost, getPostByID };
+const getPostByUserID = async (authorID) => {
+  try {
+
+    if (isNaN(authorID)) {
+      throw new Error('authorID must be a valid integer');
+    }
+
+    const pool = await poolPromise;
+    const result = await pool.request()
+      .input('authorID', sql.Int, authorID)
+      .query('SELECT * FROM Posts WHERE authorID = @authorID');
+
+    return result.recordset; 
+  } catch (error) {
+    console.error('SQL error', error);
+    throw error; 
+  }
+};
+
+
+export { getAllPosts, createPost, editPost, deletePost, getPostByID, getPostByUserID };

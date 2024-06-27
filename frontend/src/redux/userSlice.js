@@ -1,13 +1,12 @@
-// src/features/user/userSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   user: {
-    userID:'',
+    userID: '',
     username: null,
     email: '',
     profileURL: '',
-    token:""
+    token: ''
   },
 };
 
@@ -20,15 +19,18 @@ const userSlice = createSlice({
     },
     clearUser: (state) => {
       state.user = {
+        userID: '',
         username: null,
         email: '',
         profileURL: '',
-        userID:'',
-        token:""
+        token: ''
       };
+    },
+    updateProfileURL: (state, action) => {
+      state.user.profileURL = action.payload;
     },
   },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
+export const { setUser, clearUser, updateProfileURL } = userSlice.actions;
 export default userSlice.reducer;

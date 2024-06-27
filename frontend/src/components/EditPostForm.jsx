@@ -90,7 +90,7 @@ function EditPostForm() {
             const response = await _editPost(postId, formData);
             if (response.status) {
                 toast.success(response.message);
-                navigate('/')
+                navigate('/profile')
                 setSubmitting(false);
             }
         } catch (error) {

@@ -4,10 +4,12 @@ import * as Yup from 'yup';
 import { _createPost } from '../utils/API/BlogApi';
 import { handleError } from '../utils/API/errorHandler';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 function CreatePostForm() {
     const [image, setImage] = useState(null);
     const fileInputRef = useRef(null);
+    const navigate = useNavigate()
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -64,7 +66,7 @@ function CreatePostForm() {
             const response = await _createPost(formData)
             if (response.status) {
                 toast.success(response.message)
-                // navigate('/');
+                navigate('/');
                 setSubmitting(false);
             }
         } catch (error) {

@@ -3,6 +3,7 @@ import {
   createPost,
   editPost,
   getPostByID,
+  getPostByUserID,
 } from "../models/blogModel.js";
 import { findUserByID, updateUserProfile } from "../models/userModel.js";
 import { uploadToCloudinary } from "../utils/Cloudinary.js";
@@ -197,12 +198,35 @@ const getUserByIDController = async (req, res, next) => {
 
 const updateUserProfileController = async (req, res, next) => {
   try {
-    const { userID, profileURL } = req.body;
+    const userID = req.user.userID;
+    const token = req.user.token;
     if (!userID) {
-      throw new CustomError("User ID is required", 422);
+      throw new CustomError("User not Valid", 422);
+    }
+    let profileURL = null
+    if (req.file) {
+      const imageUrl = req.file.path;
+      const CloudImgResponse = await uploadToCloudinary(imageUrl, "Blink");
+      console.log(CloudImgResponse);
+      profileURL = CloudImgResponse.secure_url;
+      fs.unlinkSync(imageUrl);
     }
     const updatedUser = await updateUserProfile(userID, profileURL);
-    res.status(200).json({ message: "Profile updated successfully", user: updatedUser });
+    updatedUser.token = token
+    res.status(200).json({status:true, message: "Profile Image successfully updated", user: updatedUser });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getUserAllPosts = async (req, res, next) => {
+  try {
+    const userID = req.user.userID;
+    if (!userID) {
+      throw new CustomError("User ID is Not Found", 422);
+    }
+    const posts = await getPostByUserID(userID);
+    res.status(200).json({status:true, message: "Data Featched", posts });
   } catch (error) {
     next(error);
   }
@@ -215,5 +239,6 @@ export {
   deletePostController,
   getPostByIDController,
   updateUserProfileController,
-  getUserByIDController
+  getUserByIDController,
+  getUserAllPosts
 };
