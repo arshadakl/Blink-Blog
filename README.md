@@ -34,20 +34,20 @@ This project is a simple blogging platform built using React (Vite) for the fron
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/arshadakl/blogging-platform.git
-    cd blogging-platform
+    git clone https://github.com/arshadakl/Blink-Blog.git
+    cd Blink-Blog
     ```
 
 2. **Backend Setup**:
-    - Navigate to the `server` directory:
+    - Navigate to the `backend` directory:
       ```bash
-      cd server
+      cd backend
       ```
     - Install dependencies:
       ```bash
       npm install
       ```
-    - Create a `.env` file in the `server` directory and add the following:
+    - Create a `.env` file in the `backend` directory and add the following:
       ```plaintext
       DB_USER=USER
       DB_PASSWORD=YOUR_PASSWORD
@@ -69,7 +69,7 @@ This project is a simple blogging platform built using React (Vite) for the fron
       ```bash
       npm install
       ```
-    - Create a `.env` file in the `client` directory and add the following:
+    - Create a `.env` file in the `frontend` directory and add the following:
       ```plaintext
       VITE_BASE_API_URL=http://localhost:5000
       ```
@@ -77,13 +77,13 @@ This project is a simple blogging platform built using React (Vite) for the fron
 ### Running the Application
 
 1. **Start the Backend Server**:
-    - From the `server` directory, run:
+    - From the `backend` directory, run:
       ```bash
       npm start
       ```
 
 2. **Start the Frontend**:
-    - From the `client` directory, run:
+    - From the `frontend` directory, run:
       ```bash
       npm run dev
       ```
