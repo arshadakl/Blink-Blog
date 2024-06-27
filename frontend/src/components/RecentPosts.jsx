@@ -65,7 +65,7 @@ function RecentPosts() {
                                 <span className="text-sm text-gray-400">{DateFormater(post.created_at) }</span>
                                 <h2 className="text-xl font-bold text-slate-50">
                                     <p
-                                        className="transition duration-100 hover:text-rose-500 active:text-rose-600"
+                                        className="cursor-pointer transition duration-100 hover:text-rose-500 active:text-rose-600"
                                     >
                                         {post.title}
                                     </p>
