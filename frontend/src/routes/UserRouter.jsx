@@ -10,6 +10,7 @@ import ProfilePage from '../pages/ProfilePage'
 import LoginAuth from '../Auth/LoginAuth'
 import LogoutAth from '../Auth/LogoutAth'
 import AllPost from '../pages/AllPost'
+import NotFound from '../pages/NotFound'
 
 function UserRouter() {
   return (
@@ -30,7 +31,7 @@ function UserRouter() {
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
       </Route>
-
+      <Route path='*' element={<NotFound />} />
 
     </Routes>
   )
