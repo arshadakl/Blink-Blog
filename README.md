@@ -43,10 +43,22 @@ Blink is a simple blogging platform built using React for the frontend, Node.js 
 ## Repository Structure
 
 The repository is divided into two main folders:
-- `backend`: Contains the backend code
-- `frontend`: Contains the frontend code
+- [`backend`](./backend): Contains the backend code
+- [`frontend`](./frontend): Contains the frontend code
 
 ## Getting Started
 
 To get started with the project, you can visit the [GitHub repository](https://github.com/arshadakl/Blink-Blog.git).
+
+
+
+## How to Run the Project
+
+### Frontend
+
+how to run the frontend part of the project, please refer to the [frontend README](./frontend/README.md).
+
+### Backend
+
+how to run the backend part of the project, please refer to the [backend README](./backend/README.md).
 
