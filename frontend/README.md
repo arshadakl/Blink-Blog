@@ -1,8 +1,45 @@
-# React + Vite
+# Blink Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend part of the Blink blogging platform built using React.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Follow these steps to run the frontend part of the project.
+
+### Prerequisites
+
+Make sure you have Node.js and npm installed on your machine.
+
+### Installation
+
+1. **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/arshadakl/Blink-Blog.git
+    cd Blink-Blog/frontend
+    ```
+
+2. **Create a `.env` file:**
+
+    In the `frontend` directory, create a `.env` file and add the following line:
+
+    ```env
+    VITE_BASE_API_URL=SET_YOUR_SERVER_ENDPOINT
+    ```
+
+    Replace `SET_YOUR_SERVER_ENDPOINT` with your server endpoint URL.
+
+3. **Install dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+4. **Run the project:**
+
+    ```bash
+    npm run dev
+    ```
+
+    The development server should now be running, and you can view the application in your browser.
+

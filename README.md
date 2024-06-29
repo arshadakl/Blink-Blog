@@ -1,10 +1,12 @@
-# Blogging Platform
+# Blink
+**Visit Blink:** [blink-akl.vercel.app](https://blink-akl.vercel.app/)
 
-This project is a simple blogging platform built using React (Vite) for the frontend, Node.js (Express) for the backend, and MSSQL for the database. The platform allows users to register, login, manage blog posts, and comment on posts.
+Blink is a simple blogging platform built using React for the frontend, Node.js (Express) for the backend, and MSSQL for the database. The platform allows users to register, login, manage blog posts, comment on posts, and delete posts. Users can also upload and update their profile images, and post blogs with images.
 
 ![](https://raw.githubusercontent.com/arshadakl/assets/main/BLINK3.png?raw=true)
 
 ![](https://raw.githubusercontent.com/arshadakl/assets/main/BLINK1.png?raw=true)
+
 
 ## Features
 
@@ -16,128 +18,35 @@ This project is a simple blogging platform built using React (Vite) for the fron
 - Create, read, update, and delete blog posts
 - Display a list of all blog posts
 - Comment on blog posts
+- Post blogs with images
+
+### Profile Management
+- Upload profile images
+- Update profile images
 
 ## Technologies Used
 
-- **Frontend**: React (Vite)
-- **Backend**: Node.js (Express)
-- **Database**: MSSQL
+### Frontend
+- React
+- TailwindCSS for styling
+- Formik for form validations
+- Sonner for toast messages
+
+### Backend
+- Node.js (Express)
+- MSSQL
+- Cloudinary for image storing
+- bcryptjs for hashing passwords
+- jwt for authentication
+- multer for image uploads
+
+## Repository Structure
+
+The repository is divided into two main folders:
+- `backend`: Contains the backend code
+- `frontend`: Contains the frontend code
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js
-- MSSQL Server
-
-### Installation
-
-1. **Clone the repository**:
-    ```bash
-    git clone https://github.com/arshadakl/Blink-Blog.git
-    cd Blink-Blog
-    ```
-
-2. **Backend Setup**:
-    - Navigate to the `backend` directory:
-      ```bash
-      cd backend
-      ```
-    - Install dependencies:
-      ```bash
-      npm install
-      ```
-    - Create a `.env` file in the `backend` directory and add the following:
-      ```plaintext
-      DB_USER=USER
-      DB_PASSWORD=YOUR_PASSWORD
-      DB_SERVER=YOUR.database.windows.net
-      DB_DATABASE=blog
-      JWT_SECRET=your_SECRET
-      PORT=5000
-      CLOUDINARY_NAME=CLOUDINARY
-      CLOUDINARY_API_KEY=YOUR_CLOUDINARY_API_KEY
-      CLOUDINARY_API_SECRET=YOUR_CLOUDINARY_API_SECRET
-      ```
-
-3. **Frontend Setup**:
-    - Navigate to the `client` directory:
-      ```bash
-      cd ../client
-      ```
-    - Install dependencies:
-      ```bash
-      npm install
-      ```
-    - Create a `.env` file in the `frontend` directory and add the following:
-      ```plaintext
-      VITE_BASE_API_URL=http://localhost:5000
-      ```
-
-### Running the Application
-
-1. **Start the Backend Server**:
-    - From the `backend` directory, run:
-      ```bash
-      npm start
-      ```
-
-2. **Start the Frontend**:
-    - From the `frontend` directory, run:
-      ```bash
-      npm run dev
-      ```
-
-### Database Setup
-
-- Create the database schema by running the provided SQL scripts located in the `db` directory.
-- Ensure the MSSQL server is running and accessible using the credentials provided in the `.env` file.
-
-## API Documentation
-
-### User Endpoints
-
-- **Register**: `POST /api/users/register`
-- **Login**: `POST /api/users/login`
-- **Get Profile**: `GET /api/users/profile`
-
-### Blog Post Endpoints
-
-- **Create Post**: `POST /api/posts`
-- **Get All Posts**: `GET /api/posts`
-- **Get Post by ID**: `GET /api/posts/:id`
-- **Update Post**: `PUT /api/posts/:id`
-- **Delete Post**: `DELETE /api/posts/:id`
-
-### Comment Endpoints
-
-- **Add Comment**: `POST /api/posts/:postId/comments`
-- **Get Comments**: `GET /api/posts/:postId/comments`
-
-## Database Schema
-
-### Users Table
-- `userID`: Primary Key
-- `username`
-- `email`
-- `password`
-- `created_at`
-
-### Blog Posts Table
-- `postID`: Primary Key
-- `userID`: Foreign Key
-- `title`
-- `content`
-- `created_at`
-- `updated_at`
-
-### Comments Table
-- `commentID`: Primary Key
-- `postID`: Foreign Key
-- `userID`: Foreign Key
-- `content`
-- `created_at`
-
-
-For any questions or issues, please open an issue on GitHub or contact me directly.
+To get started with the project, you can visit the [GitHub repository](https://github.com/arshadakl/Blink-Blog.git).
 
