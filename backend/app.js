@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 configCloudinary()
-// i want to add cors
+
 app.use(cors({
   origin: 'https://blink-akl.vercel.app',
   credentials: true,
@@ -27,13 +27,6 @@ app.use('/auth', authRoutes);
 app.use('/api', blogRoutes);
 app.use('/api', commentRoutes);
 
-// app.use((err, req, res, next) => {
-//   const statusCode = err.statusCode || 500;
-//   res.status(statusCode).json({
-//       message: err.message,
-//       statusCode
-//   });
-// });
 
 app.use((err, req, res, next) => {
   if (err instanceof CustomError) {
