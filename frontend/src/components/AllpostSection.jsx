@@ -56,7 +56,7 @@ function AllpostSection() {
                                 return (
                                     <div  className="mx-auto my-2 max-w-6xl rounded-lg bg-B1/80 px-10 py-6 shadow-md">
                                         <div className="flex items-center justify-between">
-                                            <span className="font-light text-gray-200">{DateFormater(post.create_at)}</span>
+                                            <span className="font-light text-gray-200">{DateFormater(post.created_at)}</span>
                                         </div>
                                         <div className="mt-2">
                                             <p onClick={()=>navigate(`/post/${post.postID}`)}
